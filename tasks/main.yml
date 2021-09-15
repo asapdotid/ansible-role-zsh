@@ -33,10 +33,14 @@
 
 - name: ZSH | Setup zsh for default root user
   include_tasks: configure_zsh.yml
-  with_items: "{{ zsh_default_user }}"
+  loop: "{{ zsh_default_user }}"
+  loop_control:
+    loop_var: zsh_user
   when: zsh_default_user != "{}"
 
 - name: ZSH | Setup zsh for common users
   include_tasks: configure_zsh.yml
-  with_items: "{{ zsh_users }}"
+  loop: "{{ zsh_users }}"
+  loop_control:
+    loop_var: zsh_user
   when: zsh_users != "{}"
