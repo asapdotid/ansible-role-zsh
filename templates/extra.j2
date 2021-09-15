@@ -1,7 +1,6 @@
 # {{ ansible_managed }}
 
-TEXT="{{Env | default ('')}}  {{hostvars[inventory_hostname].EcType | default ('')}}  {{hostvars[inventory_hostname].Nr | default ('')}}"
-
+hostName="$(/usr/bin/cut -d. -f1 /proc/sys/kernel/hostname)"
 upSeconds="$(/usr/bin/cut -d. -f1 /proc/uptime)"
 secs=$((${upSeconds}%60))
 mins=$((${upSeconds}/60%60))
@@ -13,7 +12,7 @@ UPTIME=`printf "%d days, %02dh%02dm%02ds" "$days" "$hours" "$mins" "$secs"`
 read one five fifteen rest < /proc/loadavg
 
 echo "$(tput setaf 157)
-  ___  _      ___   _   _  ___      $(tput setaf 157)|$(tput setaf 246)|    $(tput setaf 157) HostName...........:$(tput setaf 246) $(tput bold)`perl -e "print uc('$TEXT');"`$(tput sgr0)$(tput setaf 157)
+  ___  _      ___   _   _  ___      $(tput setaf 157)|$(tput setaf 246)|    $(tput setaf 157) HostName...........:$(tput setaf 246) $(tput bold)`perl -e "print uc('$hostName');"`$(tput sgr0)$(tput setaf 157)
  / __|| |    / _ \ | | | ||   \     $(tput setaf 157)|$(tput setaf 246)|    $(tput setaf 157) OS.................:$(tput setaf 246) `uname -srmo`$(tput setaf 157)
 | (__ | |__ | (_) || |_| || |) |    $(tput setaf 157)|$(tput setaf 246)|    $(tput setaf 157) Uptime.............:$(tput setaf 246) ${UPTIME}$(tput setaf 157)
  \___||____| \___/  \___/ |___/     $(tput setaf 157)|$(tput setaf 246)|    $(tput setaf 157) Memory.............:$(tput setaf 246) `cat /proc/meminfo | grep MemFree | awk {'print $2/1000000'}`G (Free) / `cat /proc/meminfo | grep MemTotal | awk {'print $2/1000000'}`G (Total)
