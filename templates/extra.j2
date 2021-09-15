@@ -14,13 +14,13 @@ read one five fifteen rest < /proc/loadavg
 
 echo "$(tput setaf 160)
    __ _ ___  __ _ _ __      $(tput setaf 160)|$(tput setaf 244)|    $(tput setaf 160) HostName...........:$(tput setaf 244) $(tput bold)`perl -e "print uc('$TEXT');"`$(tput sgr0)$(tput setaf 160)
-  / _` / __|/ _` | '_ \     $(tput setaf 160)|$(tput setaf 244)|    $(tput setaf 160) OS.................:$(tput setaf 244) `uname -srmo`$(tput setaf 160)
- | (_| \__ \ (_| | |_) |    $(tput setaf 160)|$(tput setaf 244)|    $(tput setaf 160) Uptime.............:$(tput setaf 244) ${UPTIME}$(tput setaf 160)
+  / _` / __|/ _` | |_ \     $(tput setaf 160)|$(tput setaf 244)|    $(tput setaf 160) OS.................:$(tput setaf 244) `uname -srmo`$(tput setaf 160)
+ | /_| \__ \ /_| | |_\ |    $(tput setaf 160)|$(tput setaf 244)|    $(tput setaf 160) Uptime.............:$(tput setaf 244) ${UPTIME}$(tput setaf 160)
   \__,_|___/\__,_| .__/     $(tput setaf 160)|$(tput setaf 244)|    $(tput setaf 160) Memory.............:$(tput setaf 244) `cat /proc/meminfo | grep MemFree | awk {'print $2/1000000'}`G (Free) / `cat /proc/meminfo | grep MemTotal | awk {'print $2/1000000'}`G (Total)
      | |     (_) | |        $(tput setaf 160)|$(tput setaf 244)|    $(tput setaf 160) HDD................:$(tput setaf 244) `df -h --total | grep total | awk '{print $4}'` (Free) / `df -h --total | grep total | awk '{print $2}'` (Total)
    __| | ___  _| |_|        $(tput setaf 160)|$(tput setaf 244)|    $(tput setaf 160) Load Averages......:$(tput setaf 244) ${one}, ${five}, ${fifteen} (1, 5, 15 min)
   / _` |/ _ \| | __|        $(tput setaf 160)|$(tput setaf 244)|    $(tput setaf 160) Running Processes..:$(tput setaf 244) `ps ax | wc -l | tr -d " "`
- | (_| | (_) | | |_         $(tput setaf 160)|$(tput setaf 244)|    $(tput setaf 160) Internal IP........:$(tput setaf 244) `ip a | grep glo | awk '{print $2}' | head -1 | cut -f1 -d/`
+ | /_| | (_) | | |_         $(tput setaf 160)|$(tput setaf 244)|    $(tput setaf 160) Internal IP........:$(tput setaf 244) `ip a | grep glo | awk '{print $2}' | head -1 | cut -f1 -d/`
   \__,_|\___/|_|\__|        $(tput setaf 160)|$(tput setaf 244)|    $(tput setaf 160) External IP........:$(tput setaf 244) `wget -q -O - http://icanhazip.com/ | tail`
 
 $(tput sgr0)"
