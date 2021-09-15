@@ -1,0 +1,6 @@
+---
+# vars file for role-zsh
+zsh_default_user:
+  - name: root
+    home_dir: "/"
+    theme: fino

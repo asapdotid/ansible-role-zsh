@@ -1,0 +1,42 @@
+---
+# tasks file for role-zsh
+- name: ZSH | Ensure git and zsh was installed on Ubuntu
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - git
+    - zsh
+
+- name: ZSH | Clone oh-my-zsh repo
+  ansible.builtin.git:
+    depth: 1
+    repo: "{{ item.name }}"
+    version: master
+    dest: /usr/local/share/{{ item.dir }}
+  with_items:
+    - name: https://github.com/ohmyzsh/ohmyzsh
+      dir: oh-my-zsh
+    - name: https://github.com/zsh-users/zsh-syntax-highlighting
+      dir: zsh-syntax-highlighting
+    - name: https://github.com/zsh-users/zsh-autosuggestions
+      dir: zsh-autosuggestions
+
+- name: ZSH | Create conf folder in home directory
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0777
+  with_items:
+    - "/usr/local/share/oh-my-zsh/conf/"
+    - "/usr/local/share/oh-my-zsh/cache/"
+
+- name: ZSH | Setup zsh for default root user
+  include_tasks: configure_zsh.yml
+  with_items: "{{ zsh_default_user }}"
+  when: zsh_default_user != "{}"
+
+- name: ZSH | Setup zsh for common users
+  include_tasks: configure_zsh.yml
+  with_items: "{{ zsh_users }}"
+  when: zsh_users != "{}"
