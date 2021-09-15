@@ -37,9 +37,10 @@
       ansible.builtin.shell: "chsh -s $(which zsh) {{ item.name }}"
       changed_when: false
 
+  when: item != "{}"
+  become: true
+
   rescue:
     - name: ZSH | Configuration zsh errors on {{ ansible_facts['distribution'] }}
       ansible.builtin.debug:
         msg: "I caught a configuration zsh errors on {{ ansible_facts['distribution'] }}"
-
-  when: item != "{}"

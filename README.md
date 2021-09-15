@@ -41,18 +41,15 @@ None.
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
-      roles:
-         - { role: asapdotid.zsh }
-
-Example variables:
-
 ```yaml
-zsh_users:
-  []
-  # - name: vagrant
-  #   home_dir: "vagrant"
-  #   theme: fino
+- hosts: servers
+  vars:
+    zsh_users:
+      - name: vagrant
+        theme: fino
+
+  roles:
+    - { role: asapdotid.zsh }
 ```
 
 ## License
@@ -63,4 +60,4 @@ MIT / BSD
 
 [JogjaScript](https://jogjascript.com)
 
-This role was created in 2021 by [Asapdotid](https://jogjascript.com/).
+This role was created in 2021 by [Asapdotid](https://github.com/asapdotid).
