@@ -8,5 +8,4 @@ zsh_default_user:
 zsh_users:
   []
   # - name: vagrant
-  #   home_dir: "vagrant"
   #   theme: fino
