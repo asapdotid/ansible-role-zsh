@@ -1,39 +1,45 @@
 ---
 - name: ZSH | Configure ZSH tasks
   block:
-    - name: ZSH | Deploy .extra on {{ ansible_facts['distribution'] }}
+    - name: ZSH | Deploy .extra on {{ ansible_facts['distribution'] }} user {{ zsh_user.name }}
       ansible.builtin.template:
         src: extra.j2
         dest: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.extra"
-        mode: 0777
+        owner: "{{ zsh_user.name }}"
+        group: "{{ zsh_user.name }}"
+        mode: 0600
 
-    - name: ZSH | Deploy .bash_profile on {{ ansible_facts['distribution'] }}
+    - name: ZSH | Deploy .bash_profile on {{ ansible_facts['distribution'] }} user {{ zsh_user.name }}
       ansible.builtin.template:
         src: bash_profile.j2
         dest: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.bash_profile"
-        mode: 0777
+        owner: "{{ zsh_user.name }}"
+        group: "{{ zsh_user.name }}"
+        mode: 0600
 
-    - name: ZSH | Deploy .zshrc on {{ ansible_facts['distribution'] }}
+    - name: ZSH | Deploy .zshrc on {{ ansible_facts['distribution'] }} user {{ zsh_user.name }}
       ansible.builtin.template:
         src: zshrc.j2
         dest: /usr/local/share/oh-my-zsh/conf/zshrc
-        mode: 0777
+        mode: 0600
 
-    - name: ZSH | Remove standard zshrc on {{ ansible_facts['distribution'] }}
+    - name: ZSH | Remove standard zshrc on {{ ansible_facts['distribution'] }} user {{ zsh_user.name }}
       ansible.builtin.file:
         path: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.zshrc"
         state: absent
       changed_when: false
 
-    - name: ZSH | Symlink zshrc on {{ ansible_facts['distribution'] }}
+    - name: ZSH | Symlink zshrc on {{ ansible_facts['distribution'] }} user {{ zsh_user.name }}
       ansible.builtin.file:
-        path: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.zshrc"
         src: /usr/local/share/oh-my-zsh/conf/zshrc
+        path: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.zshrc"
         state: link
-        mode: 0777
+        owner: "{{ zsh_user.name }}"
+        group: "{{ zsh_user.name }}"
+        mode: 0600
       changed_when: false
 
-    - name: ZSH | Set zsh as default shell on {{ ansible_facts['distribution'] }}
+    - name: ZSH | Set zsh as default shell on {{ ansible_facts['distribution'] }} user {{ zsh_user.name }}
       ansible.builtin.shell: "chsh -s $(which zsh) {{ zsh_user.name }}"
       changed_when: false
 
