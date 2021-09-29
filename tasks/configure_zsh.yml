@@ -43,8 +43,8 @@
       ansible.builtin.shell: "chsh -s $(which zsh) {{ zsh_user.name }}"
       changed_when: false
 
-  when: zsh_user != "{}"
   become: true
+  when: zsh_user != "{}"
 
   rescue:
     - name: ZSH | Configuration zsh errors on {{ ansible_facts['distribution'] }}
