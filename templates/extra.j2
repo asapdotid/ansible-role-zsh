@@ -19,7 +19,7 @@ echo "$(tput setaf 157)
   ___   ___   ___  __   __ ___      $(tput setaf 157)|$(tput setaf 246)|    $(tput setaf 157) HDD................:$(tput setaf 246) `df -h --total | grep total | awk '{print $4}'` (Free) / `df -h --total | grep total | awk '{print $2}'` (Total)
  |   \ | _ \ / _ \ \ \ / /| __|     $(tput setaf 157)|$(tput setaf 246)|    $(tput setaf 157) Load Averages......:$(tput setaf 246) ${one}, ${five}, ${fifteen} (1, 5, 15 min)
  | |) ||   /| (_) | \ V / | _|      $(tput setaf 157)|$(tput setaf 246)|    $(tput setaf 157) Running Processes..:$(tput setaf 246) `ps ax | wc -l | tr -d " "`
- |___/ |_|_\ \___/   \_/  |___|     $(tput setaf 157)|$(tput setaf 246)|    $(tput setaf 157) Internal IP........:$(tput setaf 246) `ip a | grep glo | awk '{print $2}' | head -1 | cut -f1 -d/`
+ |___/ |_|_\ \___/   \_/  |___|     $(tput setaf 157)|$(tput setaf 246)|    $(tput setaf 157) Internal IP........:$(tput setaf 246) `ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/'`
                                     $(tput setaf 157)|$(tput setaf 246)|    $(tput setaf 157) External IP........:$(tput setaf 246) `wget -q -O - http://icanhazip.com/ | tail`
 
 $(tput sgr0)"
