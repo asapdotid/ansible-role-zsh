@@ -1,6 +1,6 @@
 ---
 # tasks file for role-zsh
-- name: ZSH | Ensure git and zsh was installed on Ubuntu
+- name: ZSH | Ensure git and zsh was installed on {{ ansible_facts['distribution'] }}
   ansible.builtin.package:
     name: "{{ item }}"
     state: present
