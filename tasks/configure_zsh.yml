@@ -36,7 +36,7 @@
         state: link
         owner: "{{ zsh_user.name }}"
         group: "{{ zsh_user.name }}"
-        mode: 0600
+        mode: u=rw,g=r,o=r
       changed_when: false
 
     - name: ZSH | Set zsh as default shell on {{ ansible_facts['distribution'] }} user {{ zsh_user.name }}
