@@ -44,6 +44,7 @@ SAVEHIST=1000 # saved history
 
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/local/share/zsh-autocomplete/zsh-autocomplete.zsh
 
 plugins=(git cp git-extras gnu-utils history pip python ruby screen svn npm node common-aliases cp copyfile copypath github grunt sudo ubuntu history-substring-search)
 
@@ -53,6 +54,8 @@ bindkey '^[[B' history-substring-search-down
 # Enable Colours
 export CLICOLOR=1
 
+# Fix coloring zsh-autocomplete
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
@@ -65,7 +68,6 @@ export CLICOLOR=1
 
 # extra
 [[ -f ~/.extra ]] && source ~/.extra
-
 
 source $ZSH/oh-my-zsh.sh
 
