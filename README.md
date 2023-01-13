@@ -5,7 +5,7 @@
 </h1>
 
 <p align="center" style="font-size: 1.2rem;">
-    This ansible role install ZSH packages On Ubuntu, CentOS.
+    This ansible role install ZSH package.
 </p>
 
 <p align="center">
@@ -16,16 +16,10 @@
 <a href="LICENSE.md">
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="Licence">
 </a>
-<a href="https://ubuntu.com/">
-  <img src="https://img.shields.io/badge/ubuntu-20.x-orange?style=flat&logo=ubuntu" alt="Distribution">
-</a>
-<a href="https://www.centos.org/">
-  <img src="https://img.shields.io/badge/CentOS-8-green?style=flat&logo=centos" alt="Distribution">
-</a>
 
 ## Requirements
 
-None
+- asapdotid.git [source](https://github.com/asapdotid/ansible-role-git.git)
 
 ## Role Variables
 
@@ -33,9 +27,11 @@ None
 | ----------- | ------------- | -------------------- |
 | `zsh_users` | `[]`          | Setup zsh for users. |
 
-## Dependencies
+## ZSH Plugins
 
-None.
+- Syntax Highlighting [source](https://github.com/zsh-users/zsh-syntax-highlighting.git)
+- Autosuggestions [source](https://github.com/zsh-users/zsh-autosuggestions.git)
+- Autocomplete [source](https://github.com/marlonrichert/zsh-autocomplete.git)
 
 ## Example Playbook
 
