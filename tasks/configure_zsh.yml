@@ -1,7 +1,10 @@
 ---
-- name: ZSH | Configure ZSH tasks
+- name: ZSH | Configure ZSH tasks on {{ ansible_facts['distribution'] }}
+  become: true
+  when:
+    - zsh_user != "{}"
   block:
-    - name: ZSH | Deploy .extra on {{ ansible_facts['distribution'] }} user {{ zsh_user.name }}
+    - name: ZSH | Deploy .extra user {{ zsh_user.name }}
       ansible.builtin.template:
         src: extra.j2
         dest: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.extra"
@@ -9,7 +12,7 @@
         group: "{{ zsh_user.name }}"
         mode: 0600
 
-    - name: ZSH | Deploy .bash_profile on {{ ansible_facts['distribution'] }} user {{ zsh_user.name }}
+    - name: ZSH | Deploy .bash_profile user {{ zsh_user.name }}
       ansible.builtin.template:
         src: bash_profile.j2
         dest: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.bash_profile"
@@ -17,19 +20,19 @@
         group: "{{ zsh_user.name }}"
         mode: 0600
 
-    - name: ZSH | Deploy .zshrc on {{ ansible_facts['distribution'] }} user {{ zsh_user.name }}
+    - name: ZSH | Deploy .zshrc user {{ zsh_user.name }}
       ansible.builtin.template:
         src: zshrc.j2
         dest: /usr/local/share/oh-my-zsh/conf/zshrc
         mode: 0600
 
-    - name: ZSH | Remove standard zshrc on {{ ansible_facts['distribution'] }} user {{ zsh_user.name }}
+    - name: ZSH | Remove standard zshrc user {{ zsh_user.name }}
       ansible.builtin.file:
         path: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.zshrc"
         state: absent
       changed_when: false
 
-    - name: ZSH | Symlink zshrc on {{ ansible_facts['distribution'] }} user {{ zsh_user.name }}
+    - name: ZSH | Symlink zshrc user {{ zsh_user.name }}
       ansible.builtin.file:
         src: /usr/local/share/oh-my-zsh/conf/zshrc
         path: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.zshrc"
@@ -39,12 +42,9 @@
         mode: u=rw,g=r,o=r
       changed_when: false
 
-    - name: ZSH | Set zsh as default shell on {{ ansible_facts['distribution'] }} user {{ zsh_user.name }}
+    - name: ZSH | Set zsh as default shell user {{ zsh_user.name }}
       ansible.builtin.shell: "usermod --shell $(which zsh) {{ zsh_user.name }}"
       changed_when: false
-
-  become: true
-  when: zsh_user != "{}"
 
   rescue:
     - name: ZSH | Configuration zsh errors on {{ ansible_facts['distribution'] }}
