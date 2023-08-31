@@ -5,7 +5,7 @@
 </h1>
 
 <p align="center" style="font-size: 1.2rem;">
-    This ansible role install ZSH package.
+    This ansible role install ZSH and extras
 </p>
 
 <p align="center">
