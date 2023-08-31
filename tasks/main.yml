@@ -32,7 +32,7 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    mode: 0755
+    mode: '0755'
   loop:
     - "/usr/local/share/oh-my-zsh/conf/"
     - "/usr/local/share/oh-my-zsh/cache/"
@@ -42,11 +42,11 @@
   loop: "{{ zsh_default_user }}"
   loop_control:
     loop_var: zsh_user
-  when: zsh_default_user != "{}"
+  when: zsh_default_user | length > 0
 
 - name: ZSH | Setup zsh for common users
-  ansible.builtin.include_tasks: configure_zsh.yml
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/configure_zsh.yml"
   loop: "{{ zsh_users }}"
   loop_control:
     loop_var: zsh_user
-  when: zsh_users != "{}"
+  when: zsh_users | length > 0

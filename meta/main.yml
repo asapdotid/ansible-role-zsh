@@ -1,35 +1,36 @@
+---
 galaxy_info:
   role_name: zsh
   author: Asapdotid
-  description: Role setup ZSH and extras
+  namespace: asapdotid
+  description: Role setup ZSH
   company: none
   license: MIT
-
   min_ansible_version: "2.10"
 
   platforms:
-    - name: Alpine
-      versions: [all]
-    - name: Amazon Linux
-      versions: ['2', '2023']
-    - name: Debian
-      versions: [bullseye, bookworm]
     - name: EL
-      versions: ['7', '8', '9']
-    - name: FreeBSD
-      versions: ['12.1']
+      versions:
+        - "7"
+        - "8"
+        - "9"
+    - name: Debian
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+    - name: opensuse
+      versions:
+        - all
     - name: Ubuntu
-      versions: ['focal', jammy, kinetic, lunar]
-    - name: SLES
+      versions:
+        - all
 
   galaxy_tags:
     - zsh
-    - shell
-    - ohmyzsh
+    - bash
     - terminal
-    - server
     - development
-    - install
 
-dependencies:
-  []
+dependencies: []

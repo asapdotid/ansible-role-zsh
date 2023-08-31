@@ -1,6 +1,8 @@
 ---
-- name: ZSH | Configure ZSH tasks
-  when: zsh_user | length > 0
+- name: ZSH | Configure ZSH tasks on {{ ansible_facts['distribution'] }}
+  become: true
+  when:
+    - zsh_user | length > 0
   block:
     - name: ZSH | Deploy .extra on user {{ zsh_user.name }}
       ansible.builtin.template:
@@ -8,7 +10,7 @@
         dest: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.extra"
         owner: "{{ zsh_user.name }}"
         group: "{{ zsh_user.name }}"
-        mode: 0600
+        mode: '0600'
 
     - name: ZSH | Deploy .bash_profile on user {{ zsh_user.name }}
       ansible.builtin.template:
@@ -16,13 +18,13 @@
         dest: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.bash_profile"
         owner: "{{ zsh_user.name }}"
         group: "{{ zsh_user.name }}"
-        mode: 0600
+        mode: '0600'
 
     - name: ZSH | Deploy .zshrc on user {{ zsh_user.name }}
       ansible.builtin.template:
         src: zshrc.j2
         dest: /usr/local/share/oh-my-zsh/conf/zshrc
-        mode: 0600
+        mode: '0600'
 
     - name: ZSH | Remove standard zshrc on user {{ zsh_user.name }}
       ansible.builtin.file:
