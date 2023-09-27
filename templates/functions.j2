@@ -1,0 +1,119 @@
+# {{ ansible_managed }}
+
+# Color Palette
+RESET='\033[0m'
+BOLD='\033[1m'
+
+## Foreground
+BLACK='\033[38;5;0m'
+RED='\033[38;5;1m'
+GREEN='\033[38;5;2m'
+YELLOW='\033[38;5;3m'
+BLUE='\033[38;5;4m'
+MAGENTA='\033[38;5;5m'
+CYAN='\033[38;5;6m'
+WHITE='\033[38;5;7m'
+
+## Background
+ON_BLACK='\033[48;5;0m'
+ON_RED='\033[48;5;1m'
+ON_GREEN='\033[48;5;2m'
+ON_YELLOW='\033[48;5;3m'
+ON_BLUE='\033[48;5;4m'
+ON_MAGENTA='\033[48;5;5m'
+ON_CYAN='\033[48;5;6m'
+ON_WHITE='\033[48;5;7m'
+
+# Loging
+MODULE="$(basename $0)"
+
+log() {
+  echo -e "${NAMI_DEBUG:+${CYAN}${MODULE} ${MAGENTA}$(date "+%T.%2N ")}${RESET}${@}" >&2
+}
+
+info() {
+  log "${GREEN}INFO ${RESET} ==> ${@}"
+}
+
+info_blue() {
+  log "${BLUE}INFO ${RESET} ==> ${@}"
+}
+
+warn() {
+  log "${YELLOW}WARN ${RESET} ==> ${@}"
+}
+
+error() {
+  log "${RED}ERROR${RESET} ==> ${@}"
+}
+
+input() {
+  echo -n "${GREEN}=>${RESET}${YELLOW} $1${RESET}${RED}:${RESET} "
+}
+
+# Change directory
+cd_home_dot() {
+  if [[ -n "$1" && -d "$HOME/.$1" ]]; then
+    cd "$HOME/.$1"
+  else
+    error "Please check your directory destination first!"
+  fi
+}
+
+# Make directory and change directory
+mk_cd() {
+  mkdir -p "$1"
+  cd "$1"
+}
+
+# Search for a specific file
+# Use: "find_file example"
+# Results: prints any files that begin with "example", is not case-sensitive, picks up any file type (ex. result: ExampleTest.docx)
+find_file() {
+  file = "$@"
+  file += "*"
+  find . -iname $file 2>&1 | grep -v "Operation not permitted"
+}
+
+# Search for all files with a specific extension
+# Use: "find_ext swift"
+# Results: prints all .swift files
+find_ext() {
+  ext = "*."
+  ext += "$@"
+  find . -iname $ext 2>&1 | grep -v "Operation not permitted"
+}
+
+change_dir() {
+  local cd_dir=""
+  if [[ -n $1 ]] && [[ "$1" =~ ^[0-9]+$ ]]; then
+    for ((i = 1; i <= $1; i++)); do
+      cd_dir+="../"
+    done
+    cd $cd_dir
+  else
+    error "Whoops!, please check destination"
+  fi
+}
+
+# Get public IP
+get_public_ip() {
+  local myip="$(dig +short myip.opendns.com @resolver1.opendns.com)"
+  if [[ -z "$myip" ]]; then
+    public_ip=$(curl --silent icanhazip.com)
+  else
+    public_ip=$myip
+  fi
+  info "My WAN/Public IP address: ${YELLOW}${public_ip}${RESET}"
+}
+
+# get local IP
+get_local_ip() {
+  local device=$1
+  if [[ -z "$device" ]]; then
+    local_ip=$(ip route | grep src | awk -F 'src' '{print $NF; exit}' | awk '{print $1}')
+  else
+    local_ip=$(ip addr show dev $device)
+  fi
+  info "My Local IP address: ${YELLOW}${local_ip}${RESET}"
+}
