@@ -14,7 +14,7 @@ zsh_zsh_plugins_source:
     version: master
   - name: https://github.com/marlonrichert/zsh-autocomplete.git
     dir: zsh-autocomplete
-    version: 2023.07.13
+    version: 23.07.13
 
 zsh_default_user:
   - name: root
