@@ -20,3 +20,17 @@ zsh_default_user:
   - name: root
     home_dir: "/"
     theme: fino
+
+# ZSH prerequisites requirements packages
+_zsh_requirements:
+  Debian:
+    - git
+    - dnsutils
+  Fedora:
+    - git
+    - bind-utils
+  RedHat:
+    - git
+    - bind-utils
+
+zsh_requirements: "{{ _zsh_requirements[ansible_os_family] }}"
