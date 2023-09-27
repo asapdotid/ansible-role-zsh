@@ -1,8 +1,8 @@
 ---
 # tasks file for role-zsh
-- name: ZSH | Ensure git was installed on {{ ansible_facts['distribution'] }}
+- name: ZSH | Ensure prerequisites package was installed on {{ ansible_facts['distribution'] }}
   ansible.builtin.package:
-    name: git
+    name: "{{ zsh_requirements }}"
     state: present
   become: true
 
