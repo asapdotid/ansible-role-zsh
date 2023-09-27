@@ -12,6 +12,22 @@
         group: "{{ zsh_user.name }}"
         mode: '0600'
 
+    - name: ZSH | Deploy .aliases on user {{ zsh_user.name }}
+      ansible.builtin.template:
+        src: aliases.j2
+        dest: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.aliases"
+        owner: "{{ zsh_user.name }}"
+        group: "{{ zsh_user.name }}"
+        mode: '0600'
+
+    - name: ZSH | Deploy .functions on user {{ zsh_user.name }}
+      ansible.builtin.template:
+        src: functions.j2
+        dest: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.functions"
+        owner: "{{ zsh_user.name }}"
+        group: "{{ zsh_user.name }}"
+        mode: '0600'
+
     - name: ZSH | Deploy .bash_profile on user {{ zsh_user.name }}
       ansible.builtin.template:
         src: bash_profile.j2
