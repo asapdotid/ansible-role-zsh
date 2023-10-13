@@ -4,7 +4,7 @@
   when:
     - zsh_user | length > 0
   block:
-    - name: ZSH | Deploy .extra on user {{ zsh_user.name }}
+    - name: ZSH | Deploy .extra on user {{ zsh_user.name | upper }}
       ansible.builtin.template:
         src: extra.j2
         dest: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.extra"
@@ -12,7 +12,7 @@
         group: "{{ zsh_user.name }}"
         mode: '0600'
 
-    - name: ZSH | Deploy .aliases on user {{ zsh_user.name }}
+    - name: ZSH | Deploy .aliases on user {{ zsh_user.name | upper }}
       ansible.builtin.template:
         src: aliases.j2
         dest: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.aliases"
@@ -20,7 +20,7 @@
         group: "{{ zsh_user.name }}"
         mode: '0600'
 
-    - name: ZSH | Deploy .functions on user {{ zsh_user.name }}
+    - name: ZSH | Deploy .functions on user {{ zsh_user.name | upper }}
       ansible.builtin.template:
         src: functions.j2
         dest: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.functions"
@@ -28,7 +28,7 @@
         group: "{{ zsh_user.name }}"
         mode: '0600'
 
-    - name: ZSH | Deploy .bash_profile on user {{ zsh_user.name }}
+    - name: ZSH | Deploy .bash_profile on user {{ zsh_user.name | upper }}
       ansible.builtin.template:
         src: bash_profile.j2
         dest: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.bash_profile"
@@ -36,19 +36,19 @@
         group: "{{ zsh_user.name }}"
         mode: '0600'
 
-    - name: ZSH | Deploy .zshrc on user {{ zsh_user.name }}
+    - name: ZSH | Deploy .zshrc on user {{ zsh_user.name | upper }}
       ansible.builtin.template:
         src: zshrc.j2
         dest: /usr/local/share/oh-my-zsh/conf/zshrc
         mode: '0600'
 
-    - name: ZSH | Remove standard zshrc on user {{ zsh_user.name }}
+    - name: ZSH | Remove standard zshrc on user {{ zsh_user.name | upper }}
       ansible.builtin.file:
         path: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.zshrc"
         state: absent
       changed_when: false
 
-    - name: ZSH | Symlink zshrc on user {{ zsh_user.name }}
+    - name: ZSH | Symlink zshrc on user {{ zsh_user.name | upper }}
       ansible.builtin.file:
         src: /usr/local/share/oh-my-zsh/conf/zshrc
         path: "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.zshrc"
@@ -58,7 +58,7 @@
         mode: u=rw,g=r,o=r
       changed_when: false
 
-    - name: ZSH | Set zsh as default shell on user {{ zsh_user.name }}
+    - name: ZSH | Set zsh as default shell on user {{ zsh_user.name | upper }}
       ansible.builtin.shell: "usermod --shell $(which zsh) {{ zsh_user.name }}"
       changed_when: false
 
