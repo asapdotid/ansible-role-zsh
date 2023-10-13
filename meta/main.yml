@@ -2,10 +2,10 @@
 galaxy_info:
   role_name: zsh
   author: Asapdotid
-  namespace: asapdotid
-  description: Role setup ZSH
+  description: Setup ZSH and Oh-my-zsh on system
   company: none
   license: MIT
+
   min_ansible_version: "2.10"
 
   platforms:
