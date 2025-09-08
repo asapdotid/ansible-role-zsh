@@ -58,6 +58,19 @@
         mode: u=rw,g=r,o=r
       changed_when: false
 
+    - name: ZSH | Create directories if they don't exist
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{ zsh_user.name }}"
+        group: "{{ zsh_user.name }}"
+        recurse: true
+        mode: u=rwx,g=rx,o=rx
+      loop:
+        - "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.local"
+        - "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.local/state"
+        - "{{ zsh_user.home_dir | default('/home/') }}{{ zsh_user.name }}/.cache"
+
     - name: ZSH | Set zsh as default shell on user {{ zsh_user.name | upper }}
       ansible.builtin.shell: "usermod --shell $(which zsh) {{ zsh_user.name }}"
       changed_when: false
